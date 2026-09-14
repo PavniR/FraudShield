@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}FraudShield — Real-time Fraud Detection Platform{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">🛡️</div>
+      <span>FraudShield</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Dashboard</a></li>
+      <li><a href="/transactions/" class="{% if request.path == '/transactions/' %}active{% endif %}">Transactions</a></li>
+      <li><a href="/tester/" class="{% if request.path == '/tester/' %}active{% endif %}">Live Evaluator</a></li>
+      <li><a href="/login/" class="{% if request.path == '/login/' %}active{% endif %}">Auth</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <footer>
+    <p>FraudShield &copy; 2026 — FinTech Transaction Monitoring & Fraud Detection Platform</p>
+  </footer>
+
+  <!-- Detail Modal -->
+  <div class="modal-backdrop" id="modal-backdrop" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div id="modal-detail-content"></div>
+      <div style="text-align:right; margin-top:1.5rem;">
+        <button class="btn btn-primary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

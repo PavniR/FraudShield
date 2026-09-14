@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Live Fraud Evaluator — FraudShield{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Live Fraud Risk Evaluator</h1>
+  <p class="page-subtitle">Simulate real-time fintech transaction evaluations against the Rule Engine and ML Model</p>
+</div>
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+  <!-- Simulation Form -->
+  <div class="card">
+    <h2 style="font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:1.25rem;">Transaction Input</h2>
+    <form id="tx-form">
+      <div class="form-group">
+        <label class="form-label" for="account_number">Account Number</label>
+        <input type="text" id="account_number" class="form-control" value="ACC-1001" required>
+        <span style="font-size:0.75rem; color:#9ca3af;">Base account avg amount: ₹2,500.00 | Location: Delhi</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="amount">Transaction Amount (₹)</label>
+        <input type="number" id="amount" class="form-control" value="72500" step="0.01" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="location">Location</label>
+        <input type="text" id="location" class="form-control" value="Delhi" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="merchant_name">Merchant Name</label>
+        <input type="text" id="merchant_name" class="form-control" value="Amazon India" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="recent_transaction_count">Recent Transaction Count (Burst)</label>
+        <input type="number" id="recent_transaction_count" class="form-control" value="5" min="1" required>
+      </div>
+
+      <div class="form-group" style="display:flex; align-items:center; gap:0.5rem; margin-top:1rem;">
+        <input type="checkbox" id="is_new_device" style="width:18px; height:18px;" checked>
+        <label for="is_new_device" style="font-size:0.9rem; color:#fff; cursor:pointer;">Unrecognized / New Device Flag</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem;">⚡ Evaluate Transaction Risk</button>
+    </form>
+  </div>
+
+  <!-- Live Output Panel -->
+  <div>
+    <div class="card" id="eval-result-card" style="display:none;">
+      <!-- Populated dynamically via JS -->
+    </div>
+    
+    <div class="card" style="border-style:dashed;">
+      <h3 style="font-size:1rem; color:#fff; margin-bottom:0.5rem;">💡 Preset Scenarios to Try</h3>
+      <ul style="color:#9ca3af; font-size:0.85rem; padding-left:1.2rem; line-height:1.6;">
+        <li><strong>Legitimate Tx:</strong> Amount ₹1,200 | Same Device | Delhi | Burst: 1 → Expect: <strong>ALLOW</strong></li>
+        <li><strong>Medium Suspicious:</strong> Amount ₹12,000 | New Device | Delhi | Burst: 2 → Expect: <strong>REVIEW</strong></li>
+        <li><strong>Critical Fraud:</strong> Amount ₹72,500 | New Device | Mumbai | Burst: 5 → Expect: <strong>BLOCK</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Authentication — FraudShield{% endblock %}
+
+{% block content %}
+<div class="page-header" style="text-align:center;">
+  <h1 class="page-title">User Authentication & Portal</h1>
+  <p class="page-subtitle">Analyst and administrator access control</p>
+</div>
+
+<div style="max-width:450px; margin:0 auto;" class="card">
+  <h2 style="font-size:1.25rem; font-weight:700; color:#fff; margin-bottom:1.25rem; text-align:center;">Sign In</h2>
+  <form id="auth-form" onsubmit="event.preventDefault(); alert('Session authenticated (Demo Mode)'); window.location.href='/';">
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input type="text" class="form-control" value="analyst_admin" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-control" value="••••••••••••" required>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%;">Sign In</button>
+  </form>
+</div>
+{% endblock %}

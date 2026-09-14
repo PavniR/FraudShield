@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Transactions — FraudShield{% endblock %}
+
+{% block content %}
+<div class="page-header" style="display:flex; justify-content:space-between; align-items:center;">
+  <div>
+    <h1 class="page-title">Transaction Ledger</h1>
+    <p class="page-subtitle">Inspect historical transactions and deep-dive risk telemetry</p>
+  </div>
+  <a href="/tester/" class="btn btn-primary">+ Evaluate New Transaction</a>
+</div>
+
+<div class="card">
+  <!-- Filters -->
+  <div style="display:flex; gap:1rem; margin-bottom:1.25rem;">
+    <button class="btn btn-primary" style="padding:0.4rem 0.85rem; font-size:0.85rem;" onclick="loadTransactions('')">All</button>
+    <button class="btn btn-primary" style="padding:0.4rem 0.85rem; font-size:0.85rem; background:#10b981;" onclick="loadTransactions('ALLOWED')">Allowed</button>
+    <button class="btn btn-primary" style="padding:0.4rem 0.85rem; font-size:0.85rem; background:#f59e0b;" onclick="loadTransactions('REVIEW')">Under Review</button>
+    <button class="btn btn-primary" style="padding:0.4rem 0.85rem; font-size:0.85rem; background:#ef4444;" onclick="loadTransactions('BLOCKED')">Blocked</button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>TX ID</th>
+          <th>Account #</th>
+          <th>Amount</th>
+          <th>Location</th>
+          <th>Timestamp</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="transactions-table-body">
+        <tr>
+          <td colspan="7" style="text-align:center; color:#9ca3af;">Loading transactions...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

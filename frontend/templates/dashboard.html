@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard — FraudShield{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Fraud Operations Dashboard</h1>
+  <p class="page-subtitle">Real-time fintech transaction monitoring & ML risk intelligence</p>
+</div>
+
+<!-- KPI Grid -->
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <span class="kpi-label">Total Transactions</span>
+    <span class="kpi-value" id="kpi-total">0</span>
+  </div>
+  <div class="kpi-card">
+    <span class="kpi-label">Allowed</span>
+    <span class="kpi-value" style="color:var(--allow-green);" id="kpi-allowed">0</span>
+  </div>
+  <div class="kpi-card">
+    <span class="kpi-label">Under Review</span>
+    <span class="kpi-value" style="color:var(--review-amber);" id="kpi-review">0</span>
+  </div>
+  <div class="kpi-card">
+    <span class="kpi-label">Blocked</span>
+    <span class="kpi-value" style="color:var(--block-red);" id="kpi-blocked">0</span>
+  </div>
+  <div class="kpi-card">
+    <span class="kpi-label">Fraud Rate</span>
+    <span class="kpi-value" id="kpi-rate">0.0%</span>
+  </div>
+</div>
+
+<!-- Recent Suspicious Activity Panel -->
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+    <h2 style="font-size:1.15rem; font-weight:700; color:#fff;">Recent Suspicious Activity</h2>
+    <a href="/transactions/" class="btn btn-primary" style="padding:0.4rem 0.85rem; font-size:0.85rem;">View All</a>
+  </div>
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Transaction ID</th>
+          <th>Amount</th>
+          <th>Merchant</th>
+          <th>Timestamp</th>
+          <th>Risk Score / ML</th>
+          <th>Decision</th>
+        </tr>
+      </thead>
+      <tbody id="recent-suspicious-body">
+        <tr>
+          <td colspan="6" style="text-align:center; color:#9ca3af;">Loading dashboard telemetry...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
