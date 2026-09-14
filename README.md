@@ -19,35 +19,37 @@ FraudShield combines both approaches into a hybrid decision system that is fast,
 
 ## System Architecture
 
-FraudShield follows a simple request-based architecture. The client sends a transaction to the Django backend, where the transaction is validated and evaluated by both the rule engine and the machine learning model. Their outputs are combined into a final risk score and decision, which is then stored in PostgreSQL.
+The system follows a simple transaction evaluation flow:
 
-### Architecture Overview
+1. **Frontend → Django API**  
+   The user submits a transaction through the web interface.
 
-```mermaid
-flowchart TB
+2. **Django → Fraud Detection**  
+   The backend validates the transaction and sends it to the fraud detection module.
 
-    A[Frontend / Web Client] --> B[Django REST API]
+3. **Fraud Detection → Risk Score**  
+   The system checks rule-based conditions and uses the ML model to generate a fraud score.
 
-    B --> C[Transaction Validation]
+4. **Risk Score → Decision + Database**  
+   Based on the score, the transaction is marked as **ALLOW, REVIEW, or BLOCK**, and the result is stored in PostgreSQL.
 
-    C --> D[Fraud Detection Engine]
+### Flow
 
-    D --> E[Rule Engine]
-    D --> F[ML Model]
-
-    E --> G[Risk Scoring Engine]
-    F --> G
-
-    G --> H{Final Decision}
-
-    H -->|Low Risk| I[ALLOW]
-    H -->|Medium Risk| J[REVIEW]
-    H -->|High Risk| K[BLOCK]
-
-    G --> L[(PostgreSQL Database)]
-
-    L --> M[Dashboard / Transaction History]
-    M --> A
+```text
+Frontend
+   ↓
+Django REST API
+   ↓
+Fraud Detection
+   ├── Rule Engine
+   └── ML Model
+         ↓
+     Risk Score
+         ↓
+  ALLOW / REVIEW / BLOCK
+         ↓
+     PostgreSQL
+```
 
 ## Tech Stack
 
