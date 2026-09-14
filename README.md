@@ -19,38 +19,35 @@ FraudShield combines both approaches into a hybrid decision system that is fast,
 
 ## System Architecture
 
-The client sends a transaction request to the Django backend. The backend validates the data, runs both the Rule Engine and ML Model, calculates the composite risk score, and stores the results in the database before returning the response.
+FraudShield follows a simple request-based architecture. The client sends a transaction to the Django backend, where the transaction is validated and evaluated by both the rule engine and the machine learning model. Their outputs are combined into a final risk score and decision, which is then stored in PostgreSQL.
 
-Architecture Overview:
+### Architecture Overview
 
-+-------------------------------------------------------+
-|                 Frontend / Web Client                 |
-+-------------------------------------------------------+
-                           |
-                           v
-+-------------------------------------------------------+
-|             Django / Django REST Framework            |
-+-------------------------------------------------------+
-         |                                     |
-         v                                     v
-+------------------+         +--------------------------+
-| PostgreSQL DB    |         | Fraud Detection Engine   |
-+------------------+         +--------------------------+
-                                  |                |
-                       +----------+                +----------+
-                       |                                      |
-                       v                                      v
-          +--------------------------+          +--------------------------+
-          |  Rule Engine (40% weight)|          |   ML Model (60% weight)  |
-          +--------------------------+          +--------------------------+
-                       |                                      |
-                       +----------+                +----------+
-                                  |
-                                  v
-                     +---------------------------+
-                     | Composite Risk Score      |
-                     | (ALLOW / REVIEW / BLOCK)  |
-                     +---------------------------+
+```mermaid
+flowchart TB
+
+    A[Frontend / Web Client] --> B[Django REST API]
+
+    B --> C[Transaction Validation]
+
+    C --> D[Fraud Detection Engine]
+
+    D --> E[Rule Engine]
+    D --> F[ML Model]
+
+    E --> G[Risk Scoring Engine]
+    F --> G
+
+    G --> H{Final Decision}
+
+    H -->|Low Risk| I[ALLOW]
+    H -->|Medium Risk| J[REVIEW]
+    H -->|High Risk| K[BLOCK]
+
+    G --> L[(PostgreSQL Database)]
+
+    L --> M[Dashboard / Transaction History]
+    M --> A
 
 ## Tech Stack
 
